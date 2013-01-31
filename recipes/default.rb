@@ -108,7 +108,7 @@ elsif platform? "redhat", "centos", "amazon", "fedora", "scientific"
   end
 
   service "kibana" do
-    supports :restart => true, :reload => true, :status => true
-    action :enable
+    supports :restart => true, :reload => true, :status => true, :start => true, :stop => true
+    action [:enable, :start]
   end
 end
