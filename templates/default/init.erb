@@ -36,7 +36,7 @@ start() {
   if [ -f $PIDFILE ]; then
     echo -e "\033[31;1mPID file found in $PIDFILE, already running?\033[0m"
     ls_pid="$(cat $PIDFILE)"
-    pid_running="$( ps ax | grep 'java' | grep $ls_pid )"
+    pid_running="$( ps ax | grep 'kibana' | grep $ls_pid )"
 
     if [ ! -z "$pid_running" ] ; then
       echo -e "\033[31;1mPID $ls_pid still alive, kibana is already running. Doing nothing\033[0m"
@@ -50,6 +50,8 @@ start() {
   su - $KB_USER -c "cd $KB_HOME; $BIN_SCRIPT" & > /dev/null 2>&1
   ls_pid=$!
   result=$?
+
+  echo $ls_pid > $PIDFILE
 
   if [ $result -ne 0 ] ; then
     failure
